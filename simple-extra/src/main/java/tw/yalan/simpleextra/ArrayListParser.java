@@ -64,7 +64,7 @@ public class ArrayListParser implements Parser<Bundle> {
                     }
                 } else {
                     if (type.equals(ArrayList.class)) {
-                        setArrayListValue(targetType, field, object, bindObject, keys[i]);
+                        setArrayListValue(targetType, field, object, currentExtra, keys[i]);
                     }
 //                    else if (type.equals(Array.class)) {
 //                        setArrayValue(targetType, field, object, bindObject, keys[i]);

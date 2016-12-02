@@ -66,7 +66,7 @@ public class ObjectParser implements Parser<Bundle> {
                         return false;
                     }
                 } else {
-                    setValue(fieldType, field, object, bindObject, keys[i], defaultValue);
+                    setValue(fieldType, field, object, currentExtra, keys[i], defaultValue);
                 }
             }
 
