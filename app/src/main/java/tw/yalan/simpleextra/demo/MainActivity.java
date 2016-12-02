@@ -6,6 +6,7 @@ import android.util.Log;
 
 import tw.yalan.simpleextra.SimpleExtra;
 import tw.yalan.simpleextra.annotations.ArrayListExtra;
+import tw.yalan.simpleextra.annotations.NestedExtra;
 import tw.yalan.simpleextra.base.DefaultValue;
 import tw.yalan.simpleextra.annotations.Extra;
 
@@ -26,11 +27,15 @@ public class MainActivity extends AppCompatActivity {
     boolean extraBooleanDefaultTrue;
     @Extra(key = "TESTStringArray")
     String[] testStringArray;
+    @NestedExtra(keys = {"BUNDLE", "NESTED"})
+    String nextedValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle bundleNested = new Bundle();
+        bundleNested.putString("NESTED", "NESTED VALUE");
         Bundle bundle = new Bundle();
         bundle.putInt("int", 123);
         bundle.putString("string", "string123");
@@ -39,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         bundle.putLong("long", 666);
         bundle.putBoolean("boolean", true);
         bundle.putStringArray("TESTStringArray", new String[]{"1", "2", "3"});
+        bundle.putBundle("BUNDLE", bundleNested);
         SimpleExtra.inject(this, bundle);
 
         Log.d("SimpleExtra", "int:" + extraInt);
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SimpleExtra", "boolean:" + extraBoolean);
         Log.d("SimpleExtra", "needLogin:" + extraBooleanDefaultTrue);
         Log.d("SimpleExtra", "testStringArray:" + testStringArray.toString());
+        Log.d("SimpleExtra", "nextedValue:" + nextedValue);
 
     }
 }
