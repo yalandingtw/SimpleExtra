@@ -18,6 +18,13 @@ package tw.yalan.simpleextra;
 
 import android.os.Bundle;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+
+import tw.yalan.simpleextra.annotations.ArrayListExtra;
+import tw.yalan.simpleextra.annotations.ArrayListNestedExtra;
+import tw.yalan.simpleextra.annotations.Extra;
+import tw.yalan.simpleextra.annotations.NestedExtra;
 import tw.yalan.simpleextra.base.Injecter;
 
 /**
@@ -35,8 +42,16 @@ public class ExtraInjecter implements Injecter<Bundle> {
             isSuccess = false;
             return this;
         }
-        ExtraParser parser = new ExtraParser();
-        parser.parse(object, bindObject);
+        ObjectParser parser = new ObjectParser();
+        ArrayListParser arrayListParser = new ArrayListParser();
+
+        for (Field field : object.getClass().getFields()) {
+            if (field.getAnnotation(Extra.class) != null || field.getAnnotation(NestedExtra.class) != null)
+                parser.parse(object, bindObject, field);
+            else if (field.getAnnotation(ArrayListExtra.class) != null || field.getAnnotation(ArrayListNestedExtra.class) != null)
+                arrayListParser.parse(object, bindObject, field);
+        }
+
         isSuccess = true;
         return this;
     }

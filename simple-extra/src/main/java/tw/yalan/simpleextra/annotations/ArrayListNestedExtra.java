@@ -1,4 +1,4 @@
-package tw.yalan.simpleextra.base;
+package tw.yalan.simpleextra.annotations;
 
 /**
  * Copyright (C) 2016 Alan Ding
@@ -21,14 +21,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import tw.yalan.simpleextra.base.DefaultValue;
+
 /**
  * Created by Alan Ding on 2016/12/2.
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Extras {
+public @interface ArrayListNestedExtra {
     String[] keys();
 
-    DefaultValue defult() default DefaultValue.NO_DEFAULT;
+    Class<?> type();
 
 }

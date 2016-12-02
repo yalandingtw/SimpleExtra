@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import tw.yalan.simpleextra.SimpleExtra;
+import tw.yalan.simpleextra.annotations.ArrayListExtra;
 import tw.yalan.simpleextra.base.DefaultValue;
-import tw.yalan.simpleextra.base.Extra;
+import tw.yalan.simpleextra.annotations.Extra;
 
 public class MainActivity extends AppCompatActivity {
     @Extra(key = "int")
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     boolean extraBoolean;
     @Extra(key = "needLogin", defaultValue = DefaultValue.TRUE)
     boolean extraBooleanDefaultTrue;
+    @Extra(key = "TESTStringArray")
+    String[] testStringArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         bundle.putDouble("double", 777);
         bundle.putLong("long", 666);
         bundle.putBoolean("boolean", true);
+        bundle.putStringArray("TESTStringArray", new String[]{"1", "2", "3"});
         SimpleExtra.inject(this, bundle);
-
 
         Log.d("SimpleExtra", "int:" + extraInt);
         Log.d("SimpleExtra", "string:" + extraString);
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SimpleExtra", "long:" + extraLong);
         Log.d("SimpleExtra", "boolean:" + extraBoolean);
         Log.d("SimpleExtra", "needLogin:" + extraBooleanDefaultTrue);
+        Log.d("SimpleExtra", "testStringArray:" + testStringArray.toString());
 
     }
 }

@@ -1,4 +1,4 @@
-package tw.yalan.simpleextra.base;
+package tw.yalan.simpleextra.annotations;
 
 /**
  * Copyright (C) 2016 Alan Ding
@@ -16,9 +16,21 @@ package tw.yalan.simpleextra.base;
  * limitations under the License.
  */
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import tw.yalan.simpleextra.base.DefaultValue;
+
 /**
  * Created by Alan Ding on 2016/12/2.
  */
-public enum DefaultValue {
-    ZERO, ONE, ONE_NEGATIVE, TRUE, FALSE, NULL, EMPTY_STRING, EMPTY_LIST, NO_DEFAULT
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface NestedExtra {
+    String[] keys();
+
+    DefaultValue defaultValue() default DefaultValue.NO_DEFAULT;
+
 }

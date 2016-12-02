@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SimpleExtra.iml" filepath="$PROJECT_DIR$/SimpleExtra.iml" />
-      <module fileurl="file://$PROJECT_DIR$/SimpleExtra.iml" filepath="$PROJECT_DIR$/SimpleExtra.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/simple-extra/simple-extra.iml" filepath="$PROJECT_DIR$/simple-extra/simple-extra.iml" />
       <module fileurl="file://$PROJECT_DIR$/simple-extra/simple-extra.iml" filepath="$PROJECT_DIR$/simple-extra/simple-extra.iml" />
     </modules>
   </component>
