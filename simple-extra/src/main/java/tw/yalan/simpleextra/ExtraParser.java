@@ -16,7 +16,9 @@ package tw.yalan.simpleextra;
  * limitations under the License.
  */
 
+import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.Parcelable;
 import android.util.Log;
 
@@ -31,6 +33,7 @@ import tw.yalan.simpleextra.base.Parser;
  * Created by Alan Ding on 2016/12/2.
  */
 public class ExtraParser implements Parser<Bundle> {
+
     @Override
     public void parse(Object object, Bundle bindObject) {
         Field[] fields = object.getClass().getFields();
@@ -167,6 +170,8 @@ public class ExtraParser implements Parser<Bundle> {
                         field.set(object, bindObject.getParcelable(key));
                     } else if (fieldType.equals(Serializable.class)) {
                         field.set(object, bindObject.getSerializable(key));
+                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && fieldType.equals(IBinder.class)) {
+                        field.set(object, bindObject.getBinder(key));
                     }
                 } catch (IllegalAccessException e) {
                     Log.e("SimpleExtra", "Inject field " + field.getName() + " failed. key:" + key, e);

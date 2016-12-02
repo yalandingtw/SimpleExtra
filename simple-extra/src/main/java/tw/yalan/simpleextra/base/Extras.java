@@ -29,6 +29,6 @@ import java.lang.annotation.Target;
 public @interface Extras {
     String[] keys();
 
-    DefaultValue defult();
+    DefaultValue defult() default DefaultValue.NO_DEFAULT;
 
 }

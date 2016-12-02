@@ -21,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
     long extraLong;
     @Extra(key = "boolean")
     boolean extraBoolean;
-    @Extra(key = "needLogin",defaultValue = DefaultValue.TRUE)
+    @Extra(key = "needLogin", defaultValue = DefaultValue.TRUE)
     boolean extraBooleanDefaultTrue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
