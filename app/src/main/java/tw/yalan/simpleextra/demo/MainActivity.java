@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
     @NestedExtra(keys = {"BUNDLE", "NESTED"})
     String nextedValue;
     @Extra(key = "DemoObject")
-    DemoObject singleObject;
+    DemoObjectParcelable singleObject;
     @Extra(key = "DemoObjectArray")
-    DemoObject[] objectsArray;
+    DemoObjectParcelable[] objectsArray;
     @Extra(key = "StringArrayList")
     ArrayList<String> arrayList;
 
@@ -54,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
         bundle.putBoolean("boolean", true);
         bundle.putStringArray("TESTStringArray", new String[]{"1", "2", "3"});
         bundle.putBundle("BUNDLE", bundleNested);
-        bundle.putSerializable("DemoObject", new DemoObject("TiTLE", "Name", "value"));
-        bundle.putSerializable("DemoObjectArray", new DemoObject[]{new DemoObject("TiTLE1", "Name1", "value1")
-                , new DemoObject("TiTLE2", "Name2", "value2")
-                , new DemoObject("TiTLE3", "Name3", "value3")});
+        bundle.putParcelable("DemoObject", new DemoObjectParcelable("TiTLE", "Name", "value"));
+        bundle.putParcelableArray("DemoObjectArray", new DemoObjectParcelable[]{new DemoObjectParcelable("TiTLE1", "Name1", "value1")
+                , new DemoObjectParcelable("TiTLE2", "Name2", "value2")
+                , new DemoObjectParcelable("TiTLE3", "Name3", "value3")});
         ArrayList<String> stringArrayList = new ArrayList<>();
         stringArrayList.add("String1");
         stringArrayList.add("String2");
@@ -79,6 +79,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SimpleExtra", "nextedValue:" + nextedValue);
         Log.d("SimpleExtra", "DemoObject:" + singleObject.toString());
         Log.d("SimpleExtra", "DemoObject Array:" + Arrays.toString(objectsArray));
-        Log.d("SimpleExtra", "String Array List:" + Arrays.toString(arrayList.toArray(new String[arrayList.size()])));
+        Log.d("SimpleExtra", "String Array List:" + arrayList.toString());
     }
 }

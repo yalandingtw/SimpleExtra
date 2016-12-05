@@ -25,8 +25,11 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import tw.yalan.simpleextra.base.DefaultValue;
 import tw.yalan.simpleextra.annotations.Extra;
@@ -198,42 +201,53 @@ public class ObjectParser implements Parser<Bundle> {
             field.set(object, bindObject.getByte(key));
         } else if (fieldType.equals(Bundle.class)) {
             field.set(object, bindObject.getBundle(key));
-        } else if (fieldType.equals(Parcelable.class)) {
-            field.set(object, bindObject.getParcelable(key));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && fieldType.equals(IBinder.class)) {
             field.set(object, bindObject.getBinder(key));
         } else if (fieldType.equals(ArrayList.class)) {
-            Type genericType = field.getGenericType();
-            setArrayListValue(genericType, field, object, bindObject, key);
-        } else if (Serializable.class.isAssignableFrom(field.getType())) {
-            field.set(object, bindObject.getSerializable(key));
+            ParameterizedType stringListType = (ParameterizedType) field.getGenericType();
+            Class<?> stringListClass = (Class<?>) stringListType.getActualTypeArguments()[0];
+            setArrayListValue(stringListClass, field, object, bindObject, key);
+        } else if (Parcelable.class.isAssignableFrom(field.getType())) {
+            field.set(object, bindObject.getParcelable(key));
         } else {
-            setArrayValue(fieldType, field, object, bindObject, key);
+            if (!setArrayValue(fieldType, field, object, bindObject, key)) {
+                if (Serializable.class.isAssignableFrom(field.getType())) {
+                    field.set(object, bindObject.getSerializable(key));
+                }
+            }
         }
     }
 
-    private void setArrayValue(Class<?> fieldType, Field field, Object object, Bundle bindObject, String key) throws IllegalAccessException {
+    private boolean setArrayValue(Class<?> fieldType, Field field, Object object, Bundle bindObject, String key) throws IllegalAccessException {
         if (fieldType.equals(String[].class)) {
             field.set(object, bindObject.getStringArray(key));
+            return true;
         } else if (fieldType.equals(Boolean[].class) || fieldType.equals(boolean[].class)) {
             field.set(object, bindObject.getBooleanArray(key));
+            return true;
         } else if (fieldType.equals(Integer[].class) || fieldType.equals(int[].class)) {
             field.set(object, bindObject.getIntArray(key));
+            return true;
         } else if (fieldType.equals(Double[].class) || fieldType.equals(double[].class)) {
             field.set(object, bindObject.getDoubleArray(key));
+            return true;
         } else if (fieldType.equals(Float[].class) || fieldType.equals(float[].class)) {
             field.set(object, bindObject.getFloatArray(key));
+            return true;
         } else if (fieldType.equals(Long[].class) || fieldType.equals(long[].class)) {
             field.set(object, bindObject.getLongArray(key));
+            return true;
         } else if (fieldType.equals(Byte[].class)) {
             field.set(object, bindObject.getByteArray(key));
-        } else if (fieldType.equals(Parcelable[].class)) {
+            return true;
+        } else if (Parcelable[].class.isAssignableFrom(field.getType())) {
             field.set(object, bindObject.getParcelableArray(key));
-        } else if (fieldType.equals(Serializable[].class)) {
+            return true;
+        } else if (Serializable[].class.isAssignableFrom(field.getType())) {
             field.set(object, bindObject.getSerializable(key));
-        } else {
-            field.set(object, bindObject.getSerializable(key));
+            return true;
         }
+        return false;
     }
 
     private void setArrayListValue(Type fieldType, Field field, Object object, Bundle bindObject, String key) throws IllegalAccessException {
@@ -241,9 +255,9 @@ public class ObjectParser implements Parser<Bundle> {
             field.set(object, bindObject.getStringArrayList(key));
         } else if (fieldType.equals(Integer.class) || fieldType.equals(int.class)) {
             field.set(object, bindObject.getIntegerArrayList(key));
-        } else if (fieldType.equals(Parcelable.class)) {
-            field.set(object, bindObject.getParcelableArrayList(key));
-        } else if (fieldType.equals(Serializable.class)) {
+        } else if (Parcelable.class.isAssignableFrom(field.getType())) {
+            field.set(object, bindObject.getParcelable(key));
+        } else if (Serializable.class.isAssignableFrom(field.getType())) {
             field.set(object, bindObject.getSerializable(key));
         }
     }
