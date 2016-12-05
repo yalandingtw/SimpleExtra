@@ -18,7 +18,6 @@ package tw.yalan.simpleextra;
 
 import android.os.Bundle;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 
 import tw.yalan.simpleextra.annotations.ArrayListExtra;
@@ -26,12 +25,16 @@ import tw.yalan.simpleextra.annotations.ArrayListNestedExtra;
 import tw.yalan.simpleextra.annotations.Extra;
 import tw.yalan.simpleextra.annotations.NestedExtra;
 import tw.yalan.simpleextra.base.Injecter;
+import tw.yalan.simpleextra.parser.ArrayListParser;
+import tw.yalan.simpleextra.parser.ObjectParser;
 
 /**
  * Created by Alan Ding on 2016/12/2.
  */
 public class ExtraInjecter implements Injecter<Bundle> {
     private boolean isSuccess = false;
+    private ObjectParser parser;
+    private ArrayListParser arrayListParser;
 
     protected ExtraInjecter() {
     }
@@ -42,8 +45,8 @@ public class ExtraInjecter implements Injecter<Bundle> {
             isSuccess = false;
             return this;
         }
-        ObjectParser parser = new ObjectParser();
-        ArrayListParser arrayListParser = new ArrayListParser();
+        parser = new ObjectParser();
+        arrayListParser = new ArrayListParser();
 
         for (Field field : object.getClass().getFields()) {
             if (field.getAnnotation(Extra.class) != null || field.getAnnotation(NestedExtra.class) != null)
@@ -61,6 +64,7 @@ public class ExtraInjecter implements Injecter<Bundle> {
 
     @Override
     public void recycle() {
-
+        parser = null;
+        arrayListParser = null;
     }
 }
