@@ -48,8 +48,6 @@ public class ExtraInjecter implements Injecter<Bundle> {
         for (Field field : object.getClass().getFields()) {
             if (field.getAnnotation(Extra.class) != null || field.getAnnotation(NestedExtra.class) != null)
                 parser.parse(object, bindObject, field);
-            else if (field.getAnnotation(ArrayListExtra.class) != null || field.getAnnotation(ArrayListNestedExtra.class) != null)
-                arrayListParser.parse(object, bindObject, field);
         }
 
         isSuccess = true;

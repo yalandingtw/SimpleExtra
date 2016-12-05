@@ -25,6 +25,8 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 import tw.yalan.simpleextra.base.DefaultValue;
 import tw.yalan.simpleextra.annotations.Extra;
@@ -198,10 +200,13 @@ public class ObjectParser implements Parser<Bundle> {
             field.set(object, bindObject.getBundle(key));
         } else if (fieldType.equals(Parcelable.class)) {
             field.set(object, bindObject.getParcelable(key));
-        } else if (fieldType.equals(Serializable.class)) {
-            field.set(object, bindObject.getSerializable(key));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && fieldType.equals(IBinder.class)) {
             field.set(object, bindObject.getBinder(key));
+        } else if (fieldType.equals(ArrayList.class)) {
+            Type genericType = field.getGenericType();
+            setArrayListValue(genericType, field, object, bindObject, key);
+        } else if (Serializable.class.isAssignableFrom(field.getType())) {
+            field.set(object, bindObject.getSerializable(key));
         } else {
             setArrayValue(fieldType, field, object, bindObject, key);
         }
@@ -225,6 +230,20 @@ public class ObjectParser implements Parser<Bundle> {
         } else if (fieldType.equals(Parcelable[].class)) {
             field.set(object, bindObject.getParcelableArray(key));
         } else if (fieldType.equals(Serializable[].class)) {
+            field.set(object, bindObject.getSerializable(key));
+        } else {
+            field.set(object, bindObject.getSerializable(key));
+        }
+    }
+
+    private void setArrayListValue(Type fieldType, Field field, Object object, Bundle bindObject, String key) throws IllegalAccessException {
+        if (fieldType.equals(String.class)) {
+            field.set(object, bindObject.getStringArrayList(key));
+        } else if (fieldType.equals(Integer.class) || fieldType.equals(int.class)) {
+            field.set(object, bindObject.getIntegerArrayList(key));
+        } else if (fieldType.equals(Parcelable.class)) {
+            field.set(object, bindObject.getParcelableArrayList(key));
+        } else if (fieldType.equals(Serializable.class)) {
             field.set(object, bindObject.getSerializable(key));
         }
     }

@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import tw.yalan.simpleextra.SimpleExtra;
 import tw.yalan.simpleextra.annotations.ArrayListExtra;
 import tw.yalan.simpleextra.annotations.NestedExtra;
@@ -29,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
     String[] testStringArray;
     @NestedExtra(keys = {"BUNDLE", "NESTED"})
     String nextedValue;
+    @Extra(key = "DemoObject")
+    DemoObject singleObject;
+    @Extra(key = "DemoObjectArray")
+    DemoObject[] objectsArray;
+    @Extra(key = "StringArrayList")
+    ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,19 @@ public class MainActivity extends AppCompatActivity {
         bundle.putBoolean("boolean", true);
         bundle.putStringArray("TESTStringArray", new String[]{"1", "2", "3"});
         bundle.putBundle("BUNDLE", bundleNested);
+        bundle.putSerializable("DemoObject", new DemoObject("TiTLE", "Name", "value"));
+        bundle.putSerializable("DemoObjectArray", new DemoObject[]{new DemoObject("TiTLE1", "Name1", "value1")
+                , new DemoObject("TiTLE2", "Name2", "value2")
+                , new DemoObject("TiTLE3", "Name3", "value3")});
+        ArrayList<String> stringArrayList = new ArrayList<>();
+        stringArrayList.add("String1");
+        stringArrayList.add("String2");
+        stringArrayList.add("String3");
+        bundle.putStringArrayList("StringArrayList", stringArrayList);
+        long startTime = System.currentTimeMillis();
         SimpleExtra.inject(this, bundle);
+        long endTime = System.currentTimeMillis();
+        Log.d("SimpleExtra", "time:" + (endTime - startTime));
 
         Log.d("SimpleExtra", "int:" + extraInt);
         Log.d("SimpleExtra", "string:" + extraString);
@@ -54,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("SimpleExtra", "long:" + extraLong);
         Log.d("SimpleExtra", "boolean:" + extraBoolean);
         Log.d("SimpleExtra", "needLogin:" + extraBooleanDefaultTrue);
-        Log.d("SimpleExtra", "testStringArray:" + testStringArray.toString());
+        Log.d("SimpleExtra", "testStringArray:" + Arrays.toString(testStringArray));
         Log.d("SimpleExtra", "nextedValue:" + nextedValue);
-
+        Log.d("SimpleExtra", "DemoObject:" + singleObject.toString());
+        Log.d("SimpleExtra", "DemoObject Array:" + Arrays.toString(objectsArray));
+        Log.d("SimpleExtra", "String Array List:" + Arrays.toString(arrayList.toArray(new String[arrayList.size()])));
     }
 }
