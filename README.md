@@ -28,7 +28,10 @@ dependencies {
 ```
  - Call SimpleExtra.inject() anywhere you want.
 ```
-    SimpleExtra.inject(this, bundle);
+    SimpleExtra.inject(Object, bundle);
+    SimpleExtra.inject(Activity);
+    SimpleExtra.inject(Fragment);
+    SimpleExtra.inject(DialogFragment);
 ```
 
 ## Annotations
