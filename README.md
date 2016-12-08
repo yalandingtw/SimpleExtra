@@ -4,7 +4,7 @@ Android annotation injection library for parse bundle.
 
 ## 如何使用 Usage
 
- - Add dependency in buidle.gradle:
+ - Add dependency in build.gradle:
 
 ```
 dependencies {
