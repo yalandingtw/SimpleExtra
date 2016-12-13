@@ -43,7 +43,7 @@ public class ExtraInjecter implements Injecter<Bundle> {
         }
         parser = new ObjectParser();
 
-        for (Field field : object.getClass().getFields()) {
+        for (Field field : object.getClass().getDeclaredFields()) {
             if (field.getAnnotation(Extra.class) != null || field.getAnnotation(NestedExtra.class) != null)
                 parser.parse(object, bindObject, field);
         }

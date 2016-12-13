@@ -8,7 +8,7 @@ Android annotation injection library for parse bundle.
 
 ```
 dependencies {
-    compile 'tw.yalan:simple-extra:1.0.0'
+    compile 'tw.yalan:simple-extra:1.0.1'
 }
 ```
 
@@ -38,3 +38,8 @@ dependencies {
 
  - @Extra()
  - @NestedExtra()
+
+## Release Notes
+
+  - 1.0.1: Fix issue.
+  - 1.0.0: Release.
